@@ -7,7 +7,7 @@ Autoprefixer settings (online): last 1 versions
 Only computer with browser. No Node.js Yarn, NPM etc...
 
 ### Quick start: Installation
-Copy and paste and run
+Copy/paste and run
 
 ### Tasks
 Nope.
