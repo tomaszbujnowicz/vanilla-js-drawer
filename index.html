@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>A depdency-free Vanilla JS drawer</title>
+</head>
+
+<body>
+
+  <script>
+
+    ;(function () {
+      'use strict';
+
+      // Default settings
+      var settings = {
+        speedOpen: 50,
+        speedClose: 300
+      };
+
+      /**
+       * Get the closest matching element up the DOM tree
+       */
+      var getClosest = function (elem, selector) {
+        var firstChar = selector.charAt(0);
+        for (; elem && elem !== document; elem = elem.parentNode) {
+          if (firstChar === '.') {
+            if (elem.classList.contains(selector.substr(1))) {
+              return elem;
+            }
+          } else if (firstChar === '#') {
+            if (elem.id === selector.substr(1)) {
+              return elem;
+            }
+          } else if (firstChar === '[') {
+            if (elem.hasAttribute(selector.substr(1, selector.length - 2))) {
+              return elem;
+            }
+          }
+        }
+        return false;
+      };
+
+      /**
+       * Handle events
+       * @private
+       */
+
+      var openDrawer = function (trigger) {
+        var selectorData = trigger.getAttribute('data-drawer-trigger');
+
+        document.getElementById(selectorData).classList.add('is-active');
+        document.documentElement.style.overflow = 'hidden';
+        setTimeout(function() {
+          document.getElementById(selectorData).classList.add('is-visible');
+        }, settings.speedOpen);       
+      };
+
+      var closeDrawer = function (trigger) {
+        
+        var closestParent = getClosest(trigger, '[data-drawer-target]');
+
+        closestParent.classList.remove('is-visible');
+        document.documentElement.style.overflow = '';
+        setTimeout(function() {
+          closestParent.classList.remove('is-active');
+        }, settings.speedClose);
+
+      };
+
+      var clickHandler = function (event) {
+
+        var toggle = event.target,
+            open = getClosest(toggle, '[data-drawer-trigger]'),
+            close = getClosest(toggle, '[data-drawer-close]');
+
+        if (open) {
+          openDrawer(open);
+        }
+
+        if (close) {
+          closeDrawer(close);
+        }
+
+        event.preventDefault();
+
+      };
+
+      var keydownHandler = function (event) {
+        if (event.key === 'Escape' || event.keyCode === 27) {
+          var drawers = document.querySelectorAll('[data-drawer-target]'),
+              i;
+          for (i = 0; i < drawers.length; ++i) {
+            if (drawers[i].classList.contains('is-active')) {
+              closeDrawer(drawers[i]);
+            }
+          }
+        }
+      };
+
+      document.addEventListener('click', clickHandler, false);
+      document.addEventListener('keydown', keydownHandler, false);
+
+    })();
+
+  </script>
+
+  <style>
+    .drawer__overlay {
+      display: none;
+      position: fixed;
+      top: 0; right: 0; bottom: 0; left: 0;
+      width: 100%;
+      transition: background-color .3s ease-in-out;
+      z-index: 200;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+      will-change: opacity;
+      background: rgba(255, 255, 255, 0);
+    }
+
+    .drawer__header {
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .drawer__close {
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%0A%3Csvg width='15px' height='16px' viewBox='0 0 15 16' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='2.-Menu' transform='translate(-15.000000, -13.000000)' stroke='%23000000'%3E%3Cg id='Group' transform='translate(15.000000, 13.521000)'%3E%3Cpath d='M0,0.479000129 L15,14.2971819' id='Path-3'%3E%3C/path%3E%3Cpath d='M0,14.7761821 L15,-1.24344979e-14' id='Path-3'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      width: 15px;
+      height: 15px;
+    }
+
+    .drawer__wrapper {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      height: 100%;
+      width: 100%;
+      max-width: 500px;
+      z-index: 9999;
+
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+      opacity: 0;
+      background-color: #fff;
+      box-shadow: 0 0 10px #ddd;
+      transition: width .3s, max-width .3s, opacity .3s, -webkit-transform .3s;
+      transition: transform .3s, width .3s, max-width .3s, opacity .3s;
+      transition: transform .3s, width .3s, max-width .3s, opacity .3s, -webkit-transform .3s;
+      will-change: transform, width, max-width, opacity;
+      -webkit-transform: translate3d(100%, 0, 0);
+              transform: translate3d(100%, 0, 0);
+    }
+
+    .drawer__content {
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: relative;
+      height: 100%;
+      padding: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .drawer.is-active {
+      display: block;
+    }
+
+    .drawer.is-visible .drawer__wrapper {
+      opacity: 1;
+      -webkit-transform: translateZ(0);
+              transform: translateZ(0);
+    }
+
+    .drawer.is-visible .drawer__overlay {
+      display: block;
+      background: rgba(255, 255, 255, .5);
+    }
+  </style>
+
+  <h1>
+    A depdency-free Vanilla JS drawer
+  </h1>
+
+  <div>
+    <a href="#" data-drawer-trigger="drawer-name">Open Drawer</a>
+  </div>
+
+  <div>
+    <a href="#" data-drawer-trigger="drawer-long-content">Open Drawer long content</a>
+  </div>  
+
+  <section class="drawer" id="drawer-name" data-drawer-target>
+    <div class="drawer__overlay" data-drawer-close></div>
+    <div class="drawer__wrapper">
+      <div class="drawer__header">
+        <div class="drawer__title">
+          Header Title
+        </div>
+        <button class="drawer__close" data-drawer-close></button>
+      </div>
+      <div class="drawer__content">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, iusto et? Aliquam illum id neque repudiandae dolorem dolorum totam, ipsum molestiae nemo labore est quod maiores perferendis facilis deserunt! Iusto!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="drawer" id="drawer-long-content" data-drawer-target>
+    <div class="drawer__overlay" data-drawer-close></div>
+    <div class="drawer__wrapper">
+      <div class="drawer__header">
+        <div class="drawer__title">
+          Header Title
+        </div>
+        <button class="drawer__close" data-drawer-close></button>
+      </div>
+      <div class="drawer__content">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem in aliquid nulla, sed veritatis, officiis ea aut
+          natus quas voluptates perferendis ratione modi ab qui omnis cum labore alias eos.
+        </p>
+        <div style="padding: 100px 0;"></div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam aut exercitationem laborum vero tenetur
+          officiis facilis eveniet sunt quo voluptatibus sit reiciendis, iusto quia et quidem? Dolores dolor et
+          necessitatibus.
+        </p>
+        <div style="padding: 100px 0;"></div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam aut exercitationem laborum vero tenetur
+          officiis facilis eveniet sunt quo voluptatibus sit reiciendis, iusto quia et quidem? Dolores dolor et
+          necessitatibus.
+        </p>
+        <div style="padding: 100px 0;"></div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam aut exercitationem laborum vero tenetur
+          officiis facilis eveniet sunt quo voluptatibus sit reiciendis, iusto quia et quidem? Dolores dolor et
+          necessitatibus.
+        </p>
+        <div style="padding: 100px 0;"></div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam aut exercitationem laborum vero tenetur
+          officiis facilis eveniet sunt quo voluptatibus sit reiciendis, iusto quia et quidem? Dolores dolor et
+          necessitatibus.
+        </p>
+      </div>
+    </div>
+  </section>  
+
+</body>
+
+</html>
