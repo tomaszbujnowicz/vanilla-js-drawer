@@ -54,38 +54,58 @@
        * @private
        */
 
+      // Open Drawer
       var openDrawer = function (trigger) {
-        var selectorData = trigger.getAttribute('data-drawer-trigger');
 
-        document.getElementById(selectorData).classList.add('is-active');
+        // Find target
+        var target = document.getElementById(trigger.getAttribute('data-drawer-trigger'));
+
+        // Make it active
+        target.classList.add('is-active');
+
+        // Make body overflow hidden so it's not scrollable
         document.documentElement.style.overflow = 'hidden';
+
+        // Make it visible
         setTimeout(function () {
-          document.getElementById(selectorData).classList.add('is-visible');
+	        target.classList.add('is-visible');
         }, settings.speedOpen);
+
       };
 
+      // Close Drawer
       var closeDrawer = function (trigger) {
 
+        // Find target
         var closestParent = getClosest(trigger, '[data-drawer-target]');
 
+        // Make it not visible
         closestParent.classList.remove('is-visible');
+
+        // Remove body overflow hidden
         document.documentElement.style.overflow = '';
+
+        // Make it not active
         setTimeout(function () {
           closestParent.classList.remove('is-active');
         }, settings.speedClose);
 
       };
 
+      // Click Handler
       var clickHandler = function (event) {
 
+        // Find elements
         var toggle = event.target,
             open = getClosest(toggle, '[data-drawer-trigger]'),
             close = getClosest(toggle, '[data-drawer-close]');
 
+        // Open drawer when the open button is clicked
         if (open) {
           openDrawer(open);
         }
 
+        // Close drawer when the close button (or overlay area) is clicked
         if (close) {
           closeDrawer(close);
         }
@@ -94,16 +114,24 @@
 
       };
 
+      // Keydown Handler, handle Escape button
       var keydownHandler = function (event) {
+
         if (event.key === 'Escape' || event.keyCode === 27) {
+
+          // Find all possible drawers
           var drawers = document.querySelectorAll('[data-drawer-target]'),
               i;
+
+          // Find active drawers and close them when escape is clicked
           for (i = 0; i < drawers.length; ++i) {
             if (drawers[i].classList.contains('is-active')) {
               closeDrawer(drawers[i]);
             }
           }
+
         }
+
       };
 
       document.addEventListener('click', clickHandler, false);
@@ -130,6 +158,7 @@
     }
 
     .drawer__header {
+      /* Optional */
       padding: 1.5rem;
       display: flex;
       justify-content: space-between;
@@ -137,6 +166,7 @@
     }
 
     .drawer__close {
+      /* Optional */
       border: none;
       background-color: transparent;
       cursor: pointer;
@@ -158,20 +188,23 @@
       overflow: auto;
       opacity: 0;
       background-color: #fff;
-      box-shadow: 0 0 10px #ddd;
       transition: transform .3s, opacity .3s;
       will-change: transform, opacity;
       -webkit-transform: translate3d(100%, 0, 0);
               transform: translate3d(100%, 0, 0);
+
+      /* Optional */
+      box-shadow: 0 0 10px #ddd;
     }
 
     .drawer__content {
+      position: relative;
       overflow-x: hidden;
       overflow-y: auto;
-      position: relative;
       height: 100%;
-      padding: 1.5rem;
       flex-grow: 1;
+      /* Optional */
+      padding: 1.5rem;
     }
     .drawer--left .drawer__wrapper {
       left: 0;
