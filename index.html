@@ -173,6 +173,12 @@
       padding: 1.5rem;
       flex-grow: 1;
     }
+    .drawer--left .drawer__wrapper {
+      left: 0;
+      right: auto;
+      -webkit-transform: translate3d(-100%, 0, 0);
+              transform: translate3d(-100%, 0, 0);      
+    }
 
     .drawer.is-active {
       display: block;
@@ -196,11 +202,11 @@
   </h1>
 
   <div>
-    <a href="#" data-drawer-trigger="drawer-name">Open Drawer</a>
+    <a href="#" data-drawer-trigger="drawer-name">Open Drawer from the right side</a>
   </div>
 
   <div>
-    <a href="#" data-drawer-trigger="drawer-long-content">Open Drawer long content</a>
+    <a href="#" data-drawer-trigger="drawer-name-left">Open Drawer from left side</a>
   </div>  
 
   <section class="drawer" id="drawer-name" data-drawer-target>
@@ -214,13 +220,38 @@
       </div>
       <div class="drawer__content">
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, iusto et? Aliquam illum id neque repudiandae dolorem dolorum totam, ipsum molestiae nemo labore est quod maiores perferendis facilis deserunt! Iusto!
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem in aliquid nulla, sed veritatis, officiis ea aut
+          natus quas voluptates perferendis ratione modi ab qui omnis cum labore alias eos.
+        </p>
+        <div style="padding: 100px 0;"></div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam aut exercitationem laborum vero tenetur
+          officiis facilis eveniet sunt quo voluptatibus sit reiciendis, iusto quia et quidem? Dolores dolor et
+          necessitatibus.
+        </p>
+        <div style="padding: 100px 0;"></div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam aut exercitationem laborum vero tenetur
+          officiis facilis eveniet sunt quo voluptatibus sit reiciendis, iusto quia et quidem? Dolores dolor et
+          necessitatibus.
+        </p>
+        <div style="padding: 100px 0;"></div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam aut exercitationem laborum vero tenetur
+          officiis facilis eveniet sunt quo voluptatibus sit reiciendis, iusto quia et quidem? Dolores dolor et
+          necessitatibus.
+        </p>
+        <div style="padding: 100px 0;"></div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam aut exercitationem laborum vero tenetur
+          officiis facilis eveniet sunt quo voluptatibus sit reiciendis, iusto quia et quidem? Dolores dolor et
+          necessitatibus.
         </p>
       </div>
     </div>
   </section>
 
-  <section class="drawer" id="drawer-long-content" data-drawer-target>
+  <section class="drawer drawer--left" id="drawer-name-left" data-drawer-target>
     <div class="drawer__overlay" data-drawer-close></div>
     <div class="drawer__wrapper">
       <div class="drawer__header">
