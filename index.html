@@ -27,27 +27,24 @@
       };
 
       /**
-       * Get the closest matching element up the DOM tree
-       */
-      var getClosest = function (elem, selector) {
-        var firstChar = selector.charAt(0);
-        for (; elem && elem !== document; elem = elem.parentNode) {
-          if (firstChar === '.') {
-            if (elem.classList.contains(selector.substr(1))) {
-              return elem;
-            }
-          } else if (firstChar === '#') {
-            if (elem.id === selector.substr(1)) {
-              return elem;
-            }
-          } else if (firstChar === '[') {
-            if (elem.hasAttribute(selector.substr(1, selector.length - 2))) {
-              return elem;
-            }
-          }
+      * Element.closest() polyfill
+      * https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
+      */
+      if (!Element.prototype.closest) {
+        if (!Element.prototype.matches) {
+          Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
         }
-        return false;
-      };
+        Element.prototype.closest = function (s) {
+          var el = this;
+          var ancestor = this;
+          if (!document.documentElement.contains(el)) return null;
+          do {
+            if (ancestor.matches(s)) return ancestor;
+            ancestor = ancestor.parentElement;
+          } while (ancestor !== null);
+          return null;
+        };
+      }
 
       /**
        * Handle events
@@ -77,7 +74,7 @@
       var closeDrawer = function (trigger) {
 
         // Find target
-        var closestParent = getClosest(trigger, '[data-drawer-target]');
+        var closestParent = trigger.closest('[data-drawer-target]');
 
         // Make it not visible
         closestParent.classList.remove('is-visible');
@@ -100,8 +97,8 @@
         
         // Find elements
         var toggle = event.target,
-            open = getClosest(toggle, '[data-drawer-trigger]'),
-            close = getClosest(toggle, '[data-drawer-close]');
+            open = toggle.closest('[data-drawer-trigger]'),
+            close = toggle.closest('[data-drawer-close]');
 
         // Open drawer when the open button is clicked
         if (open) {
