@@ -95,6 +95,9 @@
       // Click Handler
       var clickHandler = function (event) {
 
+        // Prevent default link behavior
+        event.preventDefault();
+        
         // Find elements
         var toggle = event.target,
             open = getClosest(toggle, '[data-drawer-trigger]'),
@@ -109,8 +112,6 @@
         if (close) {
           closeDrawer(close);
         }
-
-        event.preventDefault();
 
       };
 
