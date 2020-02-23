@@ -9,9 +9,6 @@ A browser. No Node.js, Yarn, NPM, Webpack, Gulp, etc...
 ### Quick start: Installation
 Copy/paste and use.
 
-### Tasks
-Nope.
-
 ## Copyright and license
 
 Copyright 2020 Tomasz Bujnowicz under the [MIT license](http://opensource.org/licenses/MIT).
