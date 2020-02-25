@@ -276,9 +276,6 @@
 
       // Click Handler
       var clickHandler = function (event) {
-
-        // Prevent default link behavior
-        event.preventDefault();
         
         // Find elements
         var toggle = event.target,
@@ -287,11 +284,18 @@
 
         // Open drawer when the open button is clicked
         if (open) {
+          // Prevent default link behavior
+          event.preventDefault();          
+
           openDrawer(open);
         }
 
         // Close drawer when the close button (or overlay area) is clicked
         if (close) {
+
+          // Prevent default link behavior
+          event.preventDefault();
+
           closeDrawer(close);
         }
 
