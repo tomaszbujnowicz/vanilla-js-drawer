@@ -13,14 +13,17 @@
     .drawer__overlay {
       display: none;
       position: fixed;
-      top: 0; right: 0; bottom: 0; left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
       width: 100%;
       transition: background-color .3s ease-in-out;
       z-index: 200;
       -webkit-user-select: none;
-         -moz-user-select: none;
-          -ms-user-select: none;
-              user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
       will-change: opacity;
       background: rgba(255, 255, 255, 0);
     }
@@ -45,7 +48,9 @@
 
     .drawer__wrapper {
       position: fixed;
-      top: 0; right: 0; bottom: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
       height: 100%;
       width: 100%;
       max-width: 500px;
@@ -59,7 +64,7 @@
       transition: transform .3s, opacity .3s;
       will-change: transform, opacity;
       -webkit-transform: translate3d(100%, 0, 0);
-              transform: translate3d(100%, 0, 0);
+      transform: translate3d(100%, 0, 0);
 
       /* Optional */
       box-shadow: 0 0 10px #ddd;
@@ -74,11 +79,12 @@
       /* Optional */
       padding: 1.5rem;
     }
+
     .drawer--left .drawer__wrapper {
       left: 0;
       right: auto;
       -webkit-transform: translate3d(-100%, 0, 0);
-              transform: translate3d(-100%, 0, 0);      
+      transform: translate3d(-100%, 0, 0);
     }
 
     .drawer.is-active {
@@ -88,7 +94,7 @@
     .drawer.is-visible .drawer__wrapper {
       opacity: 1;
       -webkit-transform: translateZ(0);
-              transform: translateZ(0);
+      transform: translateZ(0);
     }
 
     .drawer.is-visible .drawer__overlay {
@@ -108,7 +114,7 @@
 
   <div>
     <a href="#" data-drawer-trigger="drawer-name-left">Open Drawer from left side</a>
-  </div>  
+  </div>
 
   <section class="drawer" id="drawer-name" data-drawer-target>
     <div class="drawer__overlay" data-drawer-close></div>
@@ -192,7 +198,7 @@
         </p>
       </div>
     </div>
-  </section>  
+  </section>
 
   <script>
 
@@ -201,15 +207,9 @@
     * Immediately Invoked Function Expression Boilerplate
     * https://gomakethings.com
     */
-    
+
     ;(function () {
       'use strict';
-
-      // Default settings
-      var settings = {
-        speedOpen: 50,
-        speedClose: 300
-      };
 
       /**
       * Element.closest() polyfill
@@ -231,10 +231,19 @@
         };
       }
 
-      /**
-       * Handle events
-       * @private
-       */
+
+      //
+      // Settings
+      //
+      var settings = {
+        speedOpen: 50,
+        speedClose: 300
+      };
+
+
+      //
+      // Methods
+      //
 
       // Open Drawer
       var openDrawer = function (trigger) {
@@ -250,7 +259,7 @@
 
         // Make it visible
         setTimeout(function () {
-	        target.classList.add('is-visible');
+          target.classList.add('is-visible');
         }, settings.speedOpen);
 
       };
@@ -276,16 +285,17 @@
 
       // Click Handler
       var clickHandler = function (event) {
-        
+
         // Find elements
         var toggle = event.target,
-            open = toggle.closest('[data-drawer-trigger]'),
-            close = toggle.closest('[data-drawer-close]');
+          open = toggle.closest('[data-drawer-trigger]'),
+          close = toggle.closest('[data-drawer-close]');
 
         // Open drawer when the open button is clicked
         if (open) {
+
           // Prevent default link behavior
-          event.preventDefault();          
+          event.preventDefault();
 
           openDrawer(open);
         }
@@ -308,7 +318,7 @@
 
           // Find all possible drawers
           var drawers = document.querySelectorAll('[data-drawer-target]'),
-              i;
+            i;
 
           // Find active drawers and close them when escape is clicked
           for (i = 0; i < drawers.length; ++i) {
@@ -321,8 +331,13 @@
 
       };
 
+
+      //
+      // Inits & Event Listeners
+      //
       document.addEventListener('click', clickHandler, false);
       document.addEventListener('keydown', keydownHandler, false);
+
 
     })();
 
