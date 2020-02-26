@@ -38,6 +38,8 @@
 
     .drawer__close {
       /* Optional */
+      margin: 0;
+      padding: 0;
       border: none;
       background-color: transparent;
       cursor: pointer;
@@ -65,6 +67,8 @@
       will-change: transform, opacity;
       -webkit-transform: translate3d(100%, 0, 0);
       transform: translate3d(100%, 0, 0);
+
+      -webkit-overflow-scrolling: touch; /* enables momentum scrolling in iOS overflow elements */
 
       /* Optional */
       box-shadow: 0 0 10px #ddd;
@@ -203,13 +207,11 @@
   <script>
 
     /*!
-    * Based on
-    * Immediately Invoked Function Expression Boilerplate
+    * Based on articles on
     * https://gomakethings.com
     */
 
-    ;(function () {
-      'use strict';
+    var drawer = function () {
 
       /**
       * Element.closest() polyfill
@@ -339,7 +341,9 @@
       document.addEventListener('keydown', keydownHandler, false);
 
 
-    })();
+    };
+
+    drawer();
 
   </script>
 
