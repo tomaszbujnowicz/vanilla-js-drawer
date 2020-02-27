@@ -71,13 +71,10 @@
      
       display: flex;
       flex-direction: column; 
-           
+
       -webkit-transform: translateX(103%);
-      transform: translateX(103%); /* extra 3% because of box-shadow */
-
-      -webkit-transform: translate3d(105%, 0, 0);
-      transform: translate3d(105%, 0, 0); /* extra 5% because of box-shadow */    
-
+      transform: translateX(103%); /* extra 3% because of box-shadow */ 
+      
       -webkit-overflow-scrolling: touch; /* enables momentum scrolling in iOS overflow elements */
 
       /* Optional */
@@ -108,9 +105,6 @@
     .drawer.is-visible .drawer__wrapper {
       -webkit-transform: translateX(0);
       transform: translateX(0);
-
-      -webkit-transform: translate3d(0, 0, 0);
-      transform: translate3d(0, 0, 0);      
     }
 
     .drawer.is-visible .drawer__overlay {
