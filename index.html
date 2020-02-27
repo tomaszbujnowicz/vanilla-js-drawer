@@ -18,13 +18,14 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      transition: background-color .3s ease-in-out;
+      opacity: 0;
+      transition: background-color .3s ease-in-out, opacity .3s ease-in-out;
       z-index: 200;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
-      will-change: opacity;
+      will-change: background-color, opacity;
       background: rgba(255, 255, 255, 0);
     }
 
@@ -91,7 +92,8 @@
       transform: translate3d(-100%, 0, 0);
     }
 
-    .drawer.is-active {
+    .drawer.is-active,
+    .drawer.is-active .drawer__overlay {
       display: block;
     }
 
@@ -102,7 +104,7 @@
     }
 
     .drawer.is-visible .drawer__overlay {
-      display: block;
+      opacity: 1;
       background: rgba(255, 255, 255, .5);
     }
   </style>
@@ -239,7 +241,7 @@
       //
       var settings = {
         speedOpen: 50,
-        speedClose: 300
+        speedClose: 350
       };
 
 
