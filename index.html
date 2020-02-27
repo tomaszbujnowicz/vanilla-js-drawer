@@ -21,10 +21,11 @@
       left: 0;
       width: 100%;
       z-index: 200;
+      opacity: 0;
       
-      transition: background-color .3s ease-in-out;
-      will-change: background-color;      
-      background: rgba(255, 255, 255, 0);
+      transition: opacity 0.3s;
+      will-change: opacity;
+      background-color: #000;
 
       -webkit-user-select: none;
       -moz-user-select: none;
@@ -38,6 +39,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 1px solid #ddd;
     }
 
     .drawer__close {
@@ -63,12 +65,15 @@
       z-index: 9999;
       overflow: auto;
       
-      transition: transform .3s;
+      transition: transform 0.3s;
       will-change: transform;
       background-color: #fff;
      
-      -webkit-transform: translateX(105%);
-      transform: translateX(105%); /* extra 5% because of box-shadow */
+      -webkit-transform: translateX(103%);
+      transform: translateX(103%); /* extra 3% because of box-shadow */
+
+      -webkit-transform: translate3d(105%, 0, 0);
+      transform: translate3d(105%, 0, 0); /* extra 5% because of box-shadow *      
 
       -webkit-overflow-scrolling: touch; /* enables momentum scrolling in iOS overflow elements */
 
@@ -76,7 +81,7 @@
       flex-direction: column; 
 
       /* Optional */
-      box-shadow: 0 0 10px #ddd;
+      box-shadow: 0 2px 6px #777;
     }
 
     .drawer__content {
@@ -103,10 +108,13 @@
     .drawer.is-visible .drawer__wrapper {
       -webkit-transform: translateX(0);
       transform: translateX(0);
+
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);      
     }
 
     .drawer.is-visible .drawer__overlay {
-      background: rgba(255, 255, 255, .5);
+      opacity: 0.5;
     }
   </style>
 
