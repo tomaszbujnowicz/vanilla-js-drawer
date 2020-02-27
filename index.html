@@ -10,23 +10,26 @@
 <body>
 
   <style>
-    .drawer__overlay {
+    .drawer {
       display: none;
+    }
+    .drawer__overlay {
       position: fixed;
       top: 0;
       right: 0;
       bottom: 0;
       left: 0;
       width: 100%;
-      opacity: 0;
-      transition: background-color .3s ease-in-out, opacity .3s ease-in-out;
       z-index: 200;
+      
+      transition: background-color .3s ease-in-out,;
+      will-change: background-color, opacity;      
+      background: rgba(255, 255, 255, 0);
+
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
-      user-select: none;
-      will-change: background-color, opacity;
-      background: rgba(255, 255, 255, 0);
+      user-select: none;      
     }
 
     .drawer__header {
@@ -58,18 +61,19 @@
       width: 100%;
       max-width: 500px;
       z-index: 9999;
-
-      display: flex;
-      flex-direction: column;
       overflow: auto;
-      opacity: 0;
+      
+      transition: transform .3s;
+      will-change: transform;
       background-color: #fff;
-      transition: transform .3s, opacity .3s;
-      will-change: transform, opacity;
-      -webkit-transform: translate3d(100%, 0, 0);
-      transform: translate3d(100%, 0, 0);
+     
+      -webkit-transform: translateX(105%);
+      transform: translateX(105%); /* extra 5% because of box-shadow */
 
       -webkit-overflow-scrolling: touch; /* enables momentum scrolling in iOS overflow elements */
+
+      display: flex;
+      flex-direction: column; 
 
       /* Optional */
       box-shadow: 0 0 10px #ddd;
@@ -92,19 +96,16 @@
       transform: translate3d(-100%, 0, 0);
     }
 
-    .drawer.is-active,
-    .drawer.is-active .drawer__overlay {
+    .drawer.is-active {
       display: block;
     }
 
     .drawer.is-visible .drawer__wrapper {
-      opacity: 1;
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
+      -webkit-transform: translateX(0);
+      transform: translateX(0);
     }
 
     .drawer.is-visible .drawer__overlay {
-      opacity: 1;
       background: rgba(255, 255, 255, .5);
     }
   </style>
