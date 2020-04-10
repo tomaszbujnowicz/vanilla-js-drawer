@@ -259,7 +259,7 @@
       //
 
       // Toggle accessibility
-      var toggleccessibility = function (event) {
+      var toggleAccessibility = function (event) {
         if (event.getAttribute('aria-expanded') === 'true') {
           event.setAttribute('aria-expanded', false);
         } else {
@@ -280,7 +280,7 @@
         document.documentElement.style.overflow = 'hidden';
 
         // Toggle accessibility
-        toggleccessibility(trigger);
+        toggleAccessibility(trigger);
 
         // Make it visible
         setTimeout(function () {
@@ -303,7 +303,7 @@
         document.documentElement.style.overflow = '';
 
         // Toggle accessibility
-        toggleccessibility(childrenTrigger);
+        toggleAccessibility(childrenTrigger);
 
         // Make it not active
         setTimeout(function () {
